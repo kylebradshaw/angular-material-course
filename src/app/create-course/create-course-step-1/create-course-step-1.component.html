@@ -3,7 +3,6 @@
         <input matInput placeholder="Course Title" formControlName="title" #title maxlength="60" minlength="5" />
         <mat-hint align="end">
             {{title.value.length}} / 60
-
         </mat-hint>
         <!--
         <span matPrefix>+32</span>
@@ -13,5 +12,9 @@
             A minimum length of 5 characters is required.
         </mat-error>
     </mat-form-field>
-
+    <!-- does NOT have to be wrapped -->
+    <mat-radio-group class="course-type" formControlName="courseType">
+        <mat-radio-button [disabled]="true" value="free">Free</mat-radio-button>
+        <mat-radio-button value="premium">Premium</mat-radio-button>
+    </mat-radio-group>
 </div>
