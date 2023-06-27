@@ -37,18 +37,20 @@
     <!-- <mat-form-field appearance="outline">
         <input matInput formControlName="releasedAt" placeholder="Release date" [matDatepicker]="releasedAtPicker">
         <mat-datepicker-toggle matSuffix [for]="releasedAtPicker"></mat-datepicker-toggle>
-        <mat-datepicker #releasedAtPicker>
-
-        </mat-datepicker>
-
+        <mat-datepicker #releasedAtPicker></mat-datepicker>
     </mat-form-field> -->
     <!-- highlight date picker -->
     <mat-form-field appearance="outline">
         <input matInput formControlName="releasedAt" placeholder="Release date" [matDatepicker]="releasedAtPicker">
         <mat-datepicker-toggle matSuffix [for]="releasedAtPicker"></mat-datepicker-toggle>
-        <mat-datepicker #releasedAtPicker [dateClass]="dateClass">
-
-        </mat-datepicker>
-
+        <mat-datepicker #releasedAtPicker [dateClass]="dateClass"></mat-datepicker>
     </mat-form-field>
+    <!-- [disabled]="true" -->
+    <!--
+        indeterminate forces user interaction and will resolve to true OR false
+        good for select all checkboxes when youare in a middle state
+    -->
+    <mat-checkbox formControlName="downloadsAllowed" color="primary"
+        [indeterminate]="true"
+        >Downloads allowed?</mat-checkbox>
 </div>
