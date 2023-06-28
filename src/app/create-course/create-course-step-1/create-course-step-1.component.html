@@ -1,6 +1,7 @@
 <div [formGroup]="form" class="course-details-form">
     <mat-form-field>
-        <input matInput placeholder="Course Title" formControlName="title" #title maxlength="60" minlength="5" />
+        <mat-label>Course Title</mat-label><!-- shows as placeholder then animates! -->
+        <input matInput formControlName="title" #title maxlength="60" minlength="5" />
         <mat-hint align="end">
             {{title.value.length}} / 60
         </mat-hint>
@@ -19,7 +20,8 @@
     </mat-radio-group>
     <!-- select box should be wrapped in a mat-form-field -->
     <mat-form-field appearance="fill">
-        <mat-select formControlName="category" placeholder="Select category">
+        <mat-label>Select category</mat-label><!-- shows as placeholder then animates! -->
+        <mat-select formControlName="category">
         <!-- for multiselect? -->
         <!-- <mat-select formControlName="category" placeholder="Select category" multiple> -->
             <mat-option>None</mat-option>
@@ -41,7 +43,8 @@
     </mat-form-field> -->
     <!-- highlight date picker -->
     <mat-form-field appearance="outline">
-        <input matInput formControlName="releasedAt" placeholder="Release date" [matDatepicker]="releasedAtPicker">
+        <mat-label>Release Date</mat-label>
+        <input matInput formControlName="releasedAt" [matDatepicker]="releasedAtPicker">
         <mat-datepicker-toggle matSuffix [for]="releasedAtPicker"></mat-datepicker-toggle>
         <mat-datepicker #releasedAtPicker [dateClass]="dateClass"></mat-datepicker>
     </mat-form-field>
@@ -55,8 +58,9 @@
         >Downloads allowed?
     </mat-checkbox>
     <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
         <!-- resize the textarea accordingly w cdk utilities-->
-        <textarea matInput placeholder="Description" formControlName="longDescription"
+        <textarea matInput formControlName="longDescription"
             cdkTextareaAutosize
             [cdkAutosizeMinRows]="2"
             [cdkAutosizeMaxRows]="5"
