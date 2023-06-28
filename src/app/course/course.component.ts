@@ -17,7 +17,7 @@ import { merge, fromEvent, throwError } from "rxjs";
 })
 export class CourseComponent implements OnInit, AfterViewInit {
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-
+    @ViewChild(MatSort, {static: true}) sort: MatSort;
     course: Course;
 
     lessons: Lesson[];
@@ -122,9 +122,10 @@ export class CourseComponent implements OnInit, AfterViewInit {
         this.loading = true;
         this.coursesService.findLessons(
             this.course.id,
-            'asc',
+            this.sort?.direction ?? 'asc', // 'asc',
             this.paginator?.pageIndex ?? 0,
-            this.paginator?.pageSize ?? 3)
+            this.paginator?.pageSize ?? 3,
+            this.sort?.active ?? 'seqNo') // sets the initial sort column
             .pipe(
                 tap(lessons => this.lessons = lessons),
                 catchError(err => {
@@ -137,10 +138,18 @@ export class CourseComponent implements OnInit, AfterViewInit {
     };
 
     ngAfterViewInit() {
-        this.paginator.page.pipe(
-            tap(() => this.loadLessonsPage())
-        ).subscribe();
+        // this.paginator.page.pipe(
+        //     tap(() => this.loadLessonsPage())
+        // ).subscribe();
 
+        // reset the paginator  when the sort changes
+        this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+        // we want to refresh the lessons when the lessons changesand combine the 2, use the merge observable
+        merge(this.sort.sortChange, this.paginator.page)
+            .pipe(
+                tap(() => this.loadLessonsPage())
+            ).subscribe();
     }
 
 }
