@@ -1,13 +1,13 @@
 import { Lesson } from './../model/lesson';
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import {Course} from "../model/course";
-import {CoursesService} from "../services/courses.service";
-import {debounceTime, distinctUntilChanged, startWith, tap, delay, catchError, finalize} from 'rxjs/operators';
-import {merge, fromEvent, throwError} from "rxjs";
+import { Course } from "../model/course";
+import { CoursesService } from "../services/courses.service";
+import { debounceTime, distinctUntilChanged, startWith, tap, delay, catchError, finalize } from 'rxjs/operators';
+import { merge, fromEvent, throwError } from "rxjs";
 
 
 @Component({
@@ -16,8 +16,9 @@ import {merge, fromEvent, throwError} from "rxjs";
     styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit, AfterViewInit {
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-    course:Course;
+    course: Course;
 
     lessons: Lesson[];
     // lessons = [
@@ -104,7 +105,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
     displayedColumns = ['seqNo', 'description', 'duration'];
 
     constructor(private route: ActivatedRoute,
-                private coursesService: CoursesService) {
+        private coursesService: CoursesService) {
 
     }
 
@@ -118,21 +119,27 @@ export class CourseComponent implements OnInit, AfterViewInit {
     }
 
     loadLessonsPage() {
-      this.loading = true;
-      this.coursesService.findLessons(this.course.id, 'asc', 0, 3)
-        .pipe(
-          tap(lessons => this.lessons = lessons),
-          catchError(err => {
-            console.log(err);
-            return throwError(err);
-          }),
-          finalize(() => this.loading = false)
-        )
-        .subscribe();
+        this.loading = true;
+        this.coursesService.findLessons(
+            this.course.id,
+            'asc',
+            this.paginator?.pageIndex ?? 0,
+            this.paginator?.pageSize ?? 3)
+            .pipe(
+                tap(lessons => this.lessons = lessons),
+                catchError(err => {
+                    console.log(err);
+                    return throwError(err);
+                }),
+                finalize(() => this.loading = false)
+            )
+            .subscribe();
     };
 
     ngAfterViewInit() {
-
+        this.paginator.page.pipe(
+            tap(() => this.loadLessonsPage())
+        ).subscribe();
 
     }
 
