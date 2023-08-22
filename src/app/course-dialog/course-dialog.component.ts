@@ -11,15 +11,22 @@ import * as moment from 'moment';
 })
 export class CourseDialogComponent implements OnInit {
     description: string;
+
+    // we're prepopulating form with course data
     form = this.fb.group({
-      description: ['', Validators.required],
-      category: ['BEGINNER', Validators.required],
+      description: [this.course.description, Validators.required],
+      category: [this.course.category, Validators.required],
       releasedAt: [new Date(), Validators.required],
-      longDescription: ['', Validators.required],
+      longDescription: [this.course.longDescription, Validators.required],
     });
-    constructor(private fb: FormBuilder) {
 
-
+    constructor(
+      private fb: FormBuilder,
+      // send course to dialog
+      @Inject(MAT_DIALOG_DATA) private course: Course,
+      private dialogRef: MatDialogRef<CourseDialogComponent>
+    ) {
+      this.description = course.description;
     }
 
     ngOnInit() {
@@ -27,11 +34,24 @@ export class CourseDialogComponent implements OnInit {
     }
 
     close() {
-
+      this.dialogRef.close();
     }
+
     save() {
-
+      this.dialogRef.close(this.form.value); // pass form value to whomever called the dialog
     }
+
+}
+
+export function openEditCourseDialog(dialog: MatDialog, course: Course) {
+  const config = new MatDialogConfig();
+  config.disableClose = true; // dialog not closed on esc
+  config.autoFocus = true; // focus on first input
+  config.data = {...course}; // pass data to dialog
+  const dialogRef = dialog.open(CourseDialogComponent, config);
+
+  return dialogRef.afterClosed(); // observable that wil get the this.form.value in the observable
+
 
 }
 
