@@ -30,7 +30,13 @@ export class CourseDialogComponent implements OnInit {
     }
 
     ngOnInit() {
-
+      // don't use a dialog to scroll content
+      // don't use a data table within a dialog
+      // don't use whole page real estate for a dialog
+      // don't nest dialogs w/in each other
+      // use master/detail pattern instead of dialogs
+      // use sparingly
+      // only use dialogs for confirmations or a couple of input elements
     }
 
     close() {
