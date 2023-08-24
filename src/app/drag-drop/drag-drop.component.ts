@@ -90,4 +90,14 @@ export class DragDropComponent {
     }
   ];
 
+  drop(event: CdkDragDrop<Lesson[]>) {
+    console.log(`previous ${event.previousIndex}`);
+    console.log(`current ${event.currentIndex}`);
+
+    // we are going to use these utility methods to manipulate the arr
+    moveItemInArray(this.lessons, event.previousIndex, event.currentIndex);
+    // dropzone
+
+  }
+
 }
