@@ -1,4 +1,4 @@
-<mat-grid-list [cols]="cols" [rowHeight]="rowHeight">
+<mat-grid-list [cols]="cols" [rowHeight]="rowHeight" [ngClass]="{'handset-portrait': handsetPortrait}">
   <mat-grid-tile *ngFor="let course of courses">
 
     <mat-card class="course-card mat-mdc-elevation-specific mat-elevation-z8">

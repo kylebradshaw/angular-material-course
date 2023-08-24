@@ -25,3 +25,19 @@
 mat-card-content p {
   padding: 10px;
 }
+
+// .handset-portrait styling
+.handset-portrait {
+  .course-card {
+    width: 100%;
+    margin: 0;
+    padding: 16px 0;
+  }
+  .course-thumbnail {
+    width: 100%;
+    margin: 0;
+  }
+  .long-description {
+    padding: 10px 10px 0 10px;
+  }
+}

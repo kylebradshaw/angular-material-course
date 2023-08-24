@@ -15,6 +15,7 @@ export class CoursesCardListComponent implements OnInit {
     courses: Course[];
     cols = 3;
     rowHeight = '500px';
+    handsetPortrait = false;
 
     constructor(
       private dialog: MatDialog,
@@ -36,11 +37,13 @@ export class CoursesCardListComponent implements OnInit {
         console.log(result)
         this.cols = 3;
         this.rowHeight = '500px';
+        this.handsetPortrait = false;
         // we can change the display appropriately
         const breakpoints = result.breakpoints;
         if (breakpoints[Breakpoints.TabletPortrait]) {
           this.cols = 1;
         } else if (breakpoints[Breakpoints.HandsetPortrait]) {
+           this.handsetPortrait = true;
            this.cols = 1;
            this.rowHeight = '430px';
         } else if (breakpoints[Breakpoints.HandsetLandscape]) {
