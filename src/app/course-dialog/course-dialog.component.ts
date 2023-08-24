@@ -53,6 +53,8 @@ export function openEditCourseDialog(dialog: MatDialog, course: Course) {
   const config = new MatDialogConfig();
   config.disableClose = true; // dialog not closed on esc
   config.autoFocus = true; // focus on first input
+  config.panelClass = 'modal-panel';
+  // config.backdropClass = 'backdrop-modal-panel';
   config.data = {...course}; // pass data to dialog
   const dialogRef = dialog.open(CourseDialogComponent, config);
 
