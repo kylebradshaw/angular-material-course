@@ -10,6 +10,7 @@ import {Lesson} from '../model/lesson';
 })
 export class DragDropComponent {
 
+  done = [];
   lessons = [
     {
       id: 120,
@@ -89,6 +90,23 @@ export class DragDropComponent {
       courseId: 11
     }
   ];
+
+  dropMultiList(event: CdkDragDrop<Lesson[]>) {
+    // dropping in same container
+    if (event.previousContainer == event.container) {
+      moveItemInArray(this.lessons, event.previousIndex, event.currentIndex);
+    } else {
+      // dropping in diff container
+      transferArrayItem(
+        event.previousContainer.data, // points to the source array lessons or done
+        event.container.data, // points to the destination array lessons or done
+        event.previousIndex,
+        event.currentIndex
+      );
+
+    }
+
+  }
 
   drop(event: CdkDragDrop<Lesson[]>) {
     console.log(`previous ${event.previousIndex}`);
